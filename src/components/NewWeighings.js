@@ -5,11 +5,10 @@ function NewWeighings() {
   const [open, handleOpen] = useState(false)
   return (
     <Fragment>
-      <h4>Adicione uma nova pesagem</h4>
       <Grid centered>
         {!open 
         ?
-        <Button onClick={() => handleOpen(!open)}>Adcionar</Button>
+        <Button onClick={() => handleOpen(!open)}>Adcionar nova pesagem</Button>
         :
         <Form action="submit" method="POST">
           <Form.Group>
