@@ -1,0 +1,3 @@
+export const GET_WEIGHTS = 'GET_WEIGHTS'
+export const POST_WEIGHT = 'POST_WEIGHT'
+export const DELETE_WEIGHT = 'DELETE_WEIGHT'
