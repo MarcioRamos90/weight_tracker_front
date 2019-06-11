@@ -1,30 +1,58 @@
 import React from 'react'
-import { Table } from 'semantic-ui-react'
+import { Table, Grid } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { getWeights } from '../actions'
 
-const Weighings = () => (
-  <Table  inverted >
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Data</Table.HeaderCell>
-        <Table.HeaderCell>Peso</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
+class Weighings extends React.Component {
+  state = {
+    finishLoading: false
+  }
 
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell>30/02/2019</Table.Cell>
-        <Table.Cell>81,9</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>30/03/2019</Table.Cell>
-        <Table.Cell>81,5</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>30/04/2019</Table.Cell>
-        <Table.Cell>80,9</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-)
+  componentDidMount() {
+    const { getWeights } = this.props
 
-export default Weighings
+    getWeights().then(finishLoading => this.setState({finishLoading}))
+  }
+
+  render() {
+    const { finishLoading } = this.state
+    const { weights } = this.props
+
+    if(!finishLoading){
+      return <Grid centered>...loading</Grid>
+    }
+
+    return (
+      <Table inverted >
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Data</Table.HeaderCell>
+            <Table.HeaderCell>Peso</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+        {!!weights && weights.map(item => (
+          <Table.Row key={item.id}>
+            <Table.Cell>{item.date}</Table.Cell>
+            <Table.Cell>{item.weight}</Table.Cell>
+          </Table.Row>
+        ))
+      }
+      </Table.Body>
+      </Table>
+    )
+
+  }
+
+}
+
+const mapDispatchToProps = dispatch => ({
+  getWeights: () => dispatch(getWeights())
+})
+
+const mapStateToProps = ({weights}) => ({
+  weights
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Weighings)
