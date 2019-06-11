@@ -1,5 +1,5 @@
 import toast from '../utils/toast'
-
+import { GET_WEIGHTS } from '../constants'
 import { weights } from '../api'
 
 export const getWeights = () => {
@@ -8,7 +8,7 @@ export const getWeights = () => {
       const response = await weights.getWeights()
 
       dispatch({
-        type: "GET_WEIGHTS",
+        type: GET_WEIGHTS,
         weights: response.data
       })
 
@@ -17,6 +17,8 @@ export const getWeights = () => {
         title: 'Erro ao carregar as pesos',
         type: 'error'
       })
+
     }
+    return true
   }
 }
