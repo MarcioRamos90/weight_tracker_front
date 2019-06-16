@@ -2,14 +2,17 @@ import React from 'react';
 import './App.css';
 import NewWeights from './NewWeighings'
 import AllWeighings from './AllWeighings'
-import { Grid } from 'semantic-ui-react'
+import { Advertisement, Grid } from 'semantic-ui-react'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-          Gráfico de pesagem
-      </header>
+      <Advertisement
+        className='App-header'
+        centered
+        unit='large leaderboard'
+        test="Gráfico de pesagem"
+      />
       <div style={{marginTop: 30}}>
         <NewWeights />
       </div>
