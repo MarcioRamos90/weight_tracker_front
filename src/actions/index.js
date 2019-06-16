@@ -1,1 +1,1 @@
-export * from './weigths.actions'
+export * from './weights.actions'
