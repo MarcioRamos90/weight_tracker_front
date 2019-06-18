@@ -11,3 +11,23 @@ export const getWeights = () => {
     data: weights
   }), 1500))
 }
+
+export const newWeights = values => {
+  return new Promise((resolve) => setTimeout(() => resolve({
+    data: values
+  }), 1500))
+}
+
+export const deleteWeight = id => {
+  return new Promise((resolve, reject) => {
+    if(!!id){
+      setTimeout(() => {
+        return resolve({data: true})
+      }, 1500)
+    } else {
+      setTimeout(() => {
+        return reject({message: "Sem o ID fica difícil!"})
+      }, 1500)
+    }
+  })
+}
