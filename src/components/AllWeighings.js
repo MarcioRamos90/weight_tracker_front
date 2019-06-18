@@ -1,7 +1,8 @@
 import React from 'react'
 import { Table, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { getWeights } from '../actions'
+import { getWeights, deleteWeight } from '../actions'
+import { Icon } from 'semantic-ui-react'
 
 class Weighings extends React.Component {
   state = {
@@ -9,10 +10,11 @@ class Weighings extends React.Component {
   }
 
   componentDidMount() {
-    const { getWeights } = this.props
-
-    getWeights().then(finishLoading => this.setState({finishLoading}))
+    this.props.getWeights()
+      .then(finishLoading => this.setState({finishLoading}))
   }
+
+  handleDeleteItem = id => this.props.deleteWeight(id)
 
   render() {
     const { finishLoading } = this.state
@@ -23,19 +25,27 @@ class Weighings extends React.Component {
     }
 
     return (
-      <Table inverted >
+      <Table inverted>
         <Table.Header>
           <Table.Row>
+            <Table.HeaderCell textAlign="center" >Peso</Table.HeaderCell>
             <Table.HeaderCell>Data</Table.HeaderCell>
-            <Table.HeaderCell>Peso</Table.HeaderCell>
+            <Table.HeaderCell textAlign="center">Delete</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
         {!!weights && weights.map(item => (
           <Table.Row key={item.id}>
-            <Table.Cell>{item.date}</Table.Cell>
-            <Table.Cell>{item.weight}</Table.Cell>
+            <Table.Cell textAlign="center">{item.weight}</Table.Cell>
+            <Table.Cell collapsing>{item.date}</Table.Cell>
+            <Table.Cell 
+              selectable 
+              collapsing 
+              textAlign="center" 
+              onClick={() => this.handleDeleteItem(item.id)}>
+                <Icon name='delete' />
+            </Table.Cell>
           </Table.Row>
         ))
       }
@@ -48,11 +58,14 @@ class Weighings extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getWeights: () => dispatch(getWeights())
+  getWeights: () => dispatch(getWeights()),
+  deleteWeight: id => dispatch(deleteWeight(id))
 })
 
 const mapStateToProps = ({weights}) => ({
   weights
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Weighings)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(Weighings)

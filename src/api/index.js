@@ -1,5 +1,11 @@
-import { getWeights } from './weights.api'
+import { 
+  getWeights,
+  newWeights,
+  deleteWeight 
+} from './weights.api'
 
 export const weights = {
-  getWeights
+  getWeights,
+  newWeights,
+  deleteWeight
 }
